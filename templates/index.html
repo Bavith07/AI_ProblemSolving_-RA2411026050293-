@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe AI — Minimax vs Alpha-Beta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>Tic-Tac-Toe <span class="accent">AI</span></h1>
+                <p class="subtitle">Minimax vs Alpha-Beta Pruning</p>
+            </div>
+            <div class="score-pill">
+                <span>You: <strong id="score-human">0</strong></span>
+                <span class="divider">·</span>
+                <span>AI: <strong id="score-ai">0</strong></span>
+                <span class="divider">·</span>
+                <span>Draw: <strong id="score-draw">0</strong></span>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="game-section">
+                <div class="status-bar" id="status-bar">
+                    <div class="status-dot"></div>
+                    <span id="status-text">Your turn — place X</span>
+                </div>
+                <div class="board-container">
+                    <div class="board" id="game-board">
+                        <div class="cell" data-index="0" id="cell-0"></div>
+                        <div class="cell" data-index="1" id="cell-1"></div>
+                        <div class="cell" data-index="2" id="cell-2"></div>
+                        <div class="cell" data-index="3" id="cell-3"></div>
+                        <div class="cell" data-index="4" id="cell-4"></div>
+                        <div class="cell" data-index="5" id="cell-5"></div>
+                        <div class="cell" data-index="6" id="cell-6"></div>
+                        <div class="cell" data-index="7" id="cell-7"></div>
+                        <div class="cell" data-index="8" id="cell-8"></div>
+                    </div>
+                </div>
+                <div class="mode-selector">
+                    <button class="btn btn-primary active" id="btn-1p" onclick="setGameMode('1p')">&#128100; 1 Player (vs AI)</button>
+                    <button class="btn btn-ghost" id="btn-2p" onclick="setGameMode('2p')">&#128101; 2 Players (Local)</button>
+                </div>
+                <div class="game-controls">
+                    <button class="btn btn-primary" onclick="resetGame()">&#8635; New Game</button>
+                    <button class="btn btn-ghost" onclick="clearStats()">&#128465; Reset Stats</button>
+                </div>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-symbol x-sym">X</span> You</div>
+                    <div class="legend-item"><span class="legend-symbol o-sym">O</span> AI</div>
+                </div>
+            </section>
+
+            <section class="analytics-section">
+                <h2 class="section-title">&#9889; Performance Analytics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card minimax-card">
+                        <div class="card-header"><span class="badge mm">Minimax</span><span class="badge std">Standard</span></div>
+                        <div class="metric-row"><span>⏱ Time</span><span class="metric-val" id="mm-time">—</span></div>
+                        <div class="metric-row"><span>🔍 Nodes</span><span class="metric-val warm" id="mm-nodes">—</span></div>
+                    </div>
+                    <div class="metric-card ab-card">
+                        <div class="card-header"><span class="badge ab">Alpha-Beta</span><span class="badge prn">Pruned</span></div>
+                        <div class="metric-row"><span>⏱ Time</span><span class="metric-val" id="ab-time">—</span></div>
+                        <div class="metric-row"><span>🔍 Nodes</span><span class="metric-val cool" id="ab-nodes">—</span></div>
+                    </div>
+                </div>
+
+                <div class="comparison-panel">
+                    <h3>Comparison Summary</h3>
+                    <div class="comp-row"><span>Speed-up</span><span class="accent-text" id="comp-speedup">—</span></div>
+                    <div class="comp-row"><span>Nodes Saved</span><span id="comp-nodes-saved">—</span></div>
+                    <div class="comp-row"><span>Pruning %</span><span id="comp-prune-pct">—</span></div>
+                    <div class="bar-section" id="bar-section" style="display:none;">
+                        <p class="bar-title">Nodes Explored</p>
+                        <div class="bar-row"><span>Minimax</span><div class="bar-track"><div class="bar-fill mm-fill" id="bar-mm"></div></div><span id="bar-mm-val">0</span></div>
+                        <div class="bar-row"><span>Alpha-Beta</span><div class="bar-track"><div class="bar-fill ab-fill" id="bar-ab"></div></div><span id="bar-ab-val">0</span></div>
+                    </div>
+                </div>
+
+                <div class="history-panel">
+                    <h3>📋 Move History</h3>
+                    <div class="history-list" id="history-list">
+                        <p class="empty-msg">Play a move to see analytics</p>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <h3>ℹ How It Works</h3>
+                    <div class="info-block"><h4>Minimax</h4><p>Exhaustively explores <strong>every</strong> possible game state. Guarantees optimal play but visits all nodes.</p></div>
+                    <div class="info-block"><h4>Alpha-Beta Pruning</h4><p>Optimizes Minimax by <strong>skipping branches</strong> that can't influence the decision, dramatically reducing search space.</p></div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer"><p>AI Problem Solving Assignment — Minimax &amp; Alpha-Beta Pruning</p></footer>
+    </div>
+
+    <div class="overlay" id="game-overlay" style="display:none;">
+        <div class="overlay-card">
+            <div class="overlay-icon" id="overlay-icon">🎉</div>
+            <h2 id="overlay-title">Game Over</h2>
+            <p id="overlay-subtitle">It's a draw!</p>
+            <button class="btn btn-primary btn-lg" onclick="resetGame()">&#8635; Play Again</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
