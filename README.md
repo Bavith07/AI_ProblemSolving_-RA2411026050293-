@@ -1,6 +1,5 @@
 # AI Problem Solving Assignment
 
-**Interactive Website Link:** `[Insert Deployment Link Here]`
 
 This repository contains the implementation of two AI problem-solving assignments:
 1. **Tic-Tac-Toe AI** (Minimax vs Alpha-Beta Pruning)
@@ -11,7 +10,7 @@ This repository contains the implementation of two AI problem-solving assignment
 ## 📁 Folder Structure
 
 ```
-AI_ProblemSolving_<RegisterNumber>/
+AI_ProblemSolving/
 │
 ├── app.py                     # Problem 1: Tic-Tac-Toe Flask Backend
 ├── static/                    # Problem 1: CSS and JS files
