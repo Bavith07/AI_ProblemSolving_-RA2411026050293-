@@ -1,8 +1,8 @@
 # AI Problem Solving Assignment
 
-A unified web interface for two core AI problem-solving tasks:
-1.  **Tic-Tac-Toe AI**: Optimized with Minimax and Alpha-Beta Pruning.
-2.  **Smart Navigation**: Pathfinding visualization using BFS and DFS.
+A unified web interface for two core AI problem-solving tasks, designed with a focus on algorithm efficiency and real-time visualization.
+
+**🚀 [Live Demo: AI Problem Solving Portal](https://ai-problemsolving-ra2411026050293.onrender.com/)**
 
 ---
 
@@ -28,7 +28,7 @@ AI_ProblemSolving/
 
 ---
 
-## 🚀 How to Run
+## 🚀 How to Run Locally
 
 1.  **Install dependencies**:
     ```bash
@@ -54,6 +54,13 @@ AI_ProblemSolving/
 *   **Breadth-First Search (BFS)**: Guaranteed shortest path in unweighted graphs.
 *   **Depth-First Search (DFS)**: Deep-first exploration strategy.
 *   **Graph Builder**: Interactive canvas for creating custom node/edge networks.
+
+---
+
+## 👥 Developers
+
+*   **S SAI BAVITH TEJ** (RA2411026050293)
+*   **C M KAILASHNATH** (RA2411026050282)
 
 ---
 *Submission for AI Problem Solving Assignment*
